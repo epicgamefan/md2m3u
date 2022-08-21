@@ -13,11 +13,16 @@ namespace md2m3u
         {
             // Set Command Line Options
             bool optionAll = false;
+            bool optionRecursive = false;
             foreach(var arg in args)
             {
                 if(arg == "all")
                 {
                     optionAll = true;
+                }
+                else if(arg == "recursive")
+                {
+                    optionRecursive = true;
                 }
             }
 
@@ -25,7 +30,7 @@ namespace md2m3u
             FileScanner scanner = new FileScanner();
             scanner.SearchFolder = ".";
             scanner.AllowedExtensions = new[] { ".chd", ".iso", ".cue", ".cdi", ".gdi" };
-            scanner.Recursive = true;
+            scanner.Recursive = optionRecursive;
             List<string> discImages = scanner.Scan();
 
             // Turn Disc Images paths into Game objects.
