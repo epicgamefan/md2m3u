@@ -1,7 +1,7 @@
 # md2m3u
 Multi Disc Game to .m3u
 
-Scans the curreny path for game images looking for the one of the following extensions.<br />
+Scans the current path for game images looking for the one of the following extensions.<br />
 ".cue"<br />
 ".iso"<br />
 ".chd"<br />
