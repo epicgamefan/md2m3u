@@ -11,10 +11,20 @@ namespace md2m3u
     {
         static void Main(string[] args)
         {
+            // Set Command Line Options
+            bool optionAll = false;
+            foreach(var arg in args)
+            {
+                if(arg == "all")
+                {
+                    optionAll = true;
+                }
+            }
+
             // Scan Directory Recursively For chd/iso/cue Image Files
             FileScanner scanner = new FileScanner();
             scanner.SearchFolder = ".";
-            scanner.AllowedExtensions = new[] { ".chd", ".iso", ".cue" };
+            scanner.AllowedExtensions = new[] { ".chd", ".iso", ".cue", ".cdi", ".gdi" };
             scanner.Recursive = true;
             List<string> discImages = scanner.Scan();
 
@@ -32,7 +42,7 @@ namespace md2m3u
             // Write m3u files
             foreach (var g in processedGames)
             {
-                if(g.DiscCount > 1)
+                if(g.DiscCount > 1 || optionAll)
                 {
                     File.WriteAllText(g.M3uFile, g.M3uContent);
                 }
