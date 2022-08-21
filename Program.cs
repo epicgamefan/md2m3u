@@ -13,7 +13,7 @@ namespace md2m3u
         {
             // Scan Directory Recursively For chd/iso/cue Image Files
             FileScanner scanner = new FileScanner();
-            scanner.SearchFolder = ".";
+            scanner.SearchFolder = "E:\\chd_psx\\CHD-PSX-Improvements";
             scanner.AllowedExtensions = new[] { ".chd", ".iso", ".cue" };
             scanner.Recursive = true;
             List<string> discImages = scanner.Scan();

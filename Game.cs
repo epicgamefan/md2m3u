@@ -11,7 +11,16 @@ namespace md2m3u
         private string _gameName = "";
         private string _gameDir = "";
         private string _gameExt = "";
-        private static string _regexPattern = @"^.*?(\s?\(Disc\s?([0-9])\))[^$]*$";
+        private string _multiDiscType = "";
+
+        private static Dictionary<string, string> _regexPatterns = new Dictionary<string, string>()
+        {
+            { "redump", @"^.*?(\(Disc ([0-9])\))[^$]*$" },
+            { "disc", @"^.*?(\(Disc([0-9])\))[^$]*$" },
+            { "dvd", @"^.*?( - DVD-([0-9]))[^$]*$" },
+            { "cd", @"^.*?( - CD([0-9]))[^$]*$" }
+        };
+
         private SortedDictionary<int, string> _discImages = new SortedDictionary<int, string>();
 
         public SortedDictionary<int, string> DiscImages
@@ -66,14 +75,17 @@ namespace md2m3u
             return Path.GetFileNameWithoutExtension(discImage) + " (" + Path.GetExtension(discImage).ToUpper().Remove(0, 1) + ")";
         }
 
-        public static int ParseDiscNumber(string discImage)
+        private static int ParseDiscNumber(string discImage)
         {
             string gameName = Game.ParseGameName(discImage);
 
-            Match m = Regex.Match(gameName, _regexPattern, RegexOptions.None);
-            if (m.Success)
+            foreach (var regexPattern in _regexPatterns)
             {
-                return int.Parse(m.Groups[2].Value);
+                Match m = Regex.Match(gameName, regexPattern.Value, RegexOptions.None);
+                if (m.Success)
+                {
+                    return int.Parse(m.Groups[2].Value);
+                }
             }
             return 0;
         }
@@ -82,14 +94,23 @@ namespace md2m3u
         {
             _gameExt = Path.GetExtension(discImage);
             _gameDir = Path.GetDirectoryName(discImage);
-
             _discImages.Add(Game.ParseDiscNumber(discImage), discImage);
-            _gameName = Game.ParseGameName(discImage); 
+            _gameName = Game.ParseGameName(discImage);
 
-            Match m = Regex.Match(_gameName, _regexPattern, RegexOptions.None);
-            if (m.Success)
+            foreach (var regexPattern in _regexPatterns)
             {
-                _gameName = _gameName.Replace(m.Groups[1].Value, "");
+                Match m = Regex.Match(_gameName, regexPattern.Value, RegexOptions.None);
+                if (m.Success)
+                {
+                    _gameName = _gameName.Replace(m.Groups[1].Value, "");
+                    _multiDiscType = regexPattern.Key;
+                    if(_multiDiscType != "redump")
+                    {
+                        _gameName += " (" + _multiDiscType.ToUpper() + ")";
+                    }
+
+                    break;
+                }
             }
         }
 
@@ -106,6 +127,11 @@ namespace md2m3u
             }
 
             if (g._gameDir  != _gameDir)
+            {
+                return false;
+            }
+
+            if (g._multiDiscType != _multiDiscType)
             {
                 return false;
             }
