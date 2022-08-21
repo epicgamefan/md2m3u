@@ -1,5 +1,5 @@
 # md2m3u
-Multi Disc Game to .M3U
+Multi Disc Game to .m3u
 
 Scans the curreny path for game images looking for the one of the following extensions.<br />
 ".cue"<br />
