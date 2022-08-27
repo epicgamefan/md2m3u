@@ -29,7 +29,7 @@ namespace md2m3u
             // Scan Directory Recursively For chd/iso/cue Image Files
             FileScanner scanner = new FileScanner();
             scanner.SearchFolder = ".";
-            scanner.AllowedExtensions = new[] { ".chd", ".iso", ".cue", ".cdi", ".gdi" };
+            scanner.AllowedExtensions = new[] { ".chd", ".iso", ".cue", ".cdi", ".gdi", ".rvz" };
             scanner.Recursive = optionRecursive;
             List<string> discImages = scanner.Scan();
 

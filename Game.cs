@@ -15,8 +15,8 @@ namespace md2m3u
 
         private static Dictionary<string, string> _regexPatterns = new Dictionary<string, string>()
         {
-            { "redump", @"^.*?(\(Disc ([0-9])\))[^$]*$" },
-            { "disc", @"^.*?(\(Disc([0-9])\))[^$]*$" },
+            { "redump", @"^.*?( \(Disc ([0-9])\))[^$]*$" },
+            { "disc", @"^.*?( \(Disc([0-9])\))[^$]*$" },
             { "dvd", @"^.*?( - DVD-([0-9]))[^$]*$" },
             { "cd", @"^.*?( - CD([0-9]))[^$]*$" }
         };
@@ -70,7 +70,7 @@ namespace md2m3u
             }
         }
 
-        public static string ParseGameName(string discImage)
+        private static string ParseGameName(string discImage)
         {
             return Path.GetFileNameWithoutExtension(discImage) + " (" + Path.GetExtension(discImage).ToUpper().Remove(0, 1) + ")";
         }
