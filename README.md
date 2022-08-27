@@ -7,6 +7,7 @@ Scans the current path for game images looking for the one of the following exte
 ".chd"<br />
 ".cdi"<br />
 ".gdi"<br />
+".rvz"<br />
 
 An .m3u file is created when a multi disc game is detected.  Multi Disc Games can be found with one of the following patterns.<br />
 " (Disc #)"<br />
