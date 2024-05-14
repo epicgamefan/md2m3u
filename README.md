@@ -8,12 +8,16 @@ Scans the current path for game images looking for the one of the following exte
 ".cdi"<br />
 ".gdi"<br />
 ".rvz"<br />
+".d64"<br />
 
 An .m3u file is created when a multi disc game is detected.  Multi Disc Games can be found with one of the following patterns.<br />
-" (Disc #)"<br />
-" (Disc#)"<br />
-" - DVD-#"<br />
-" - CD#"<br />
+" (Disc [0-9])"<br />
+" (Disc[0-9])"<br />
+" - DVD-[0-9]"<br />
+" - CD[0-9]"<br />
+" (Disk [0-9])"<br />
+" (Disk [0-9] Side [AB])"<br />
+" (Side [AB])"<br />
 
 all - Run with the "all" flag to create .m3u for all detected games.<br />
 recursive - Run with the "recursive" to scan for images recursively<br />

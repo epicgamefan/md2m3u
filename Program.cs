@@ -29,10 +29,11 @@ namespace md2m3u
             // Scan Directory Recursively For chd/iso/cue Image Files
             FileScanner scanner = new FileScanner();
             scanner.SearchFolder = ".";
-            scanner.AllowedExtensions = new[] { ".chd", ".iso", ".cue", ".cdi", ".gdi", ".rvz" };
+            scanner.AllowedExtensions = new[] { ".chd", ".iso", ".cue", ".cdi", ".gdi", ".rvz", ".d64" };
             scanner.Recursive = optionRecursive;
             List<string> discImages = scanner.Scan();
 
+            System.Console.WriteLine("Reading Games");
             // Turn Disc Images paths into Game objects.
             List<Game> games = new List<Game>();
             foreach(var di in discImages)
@@ -41,9 +42,11 @@ namespace md2m3u
                 games.Add(g);
             }
 
+            System.Console.WriteLine("Combining Multi Disc/Disk Games");
             // Combine multi disc games
             List<Game> processedGames = Game.CombineGames(games);
 
+            System.Console.WriteLine("Writing m3u Files");
             // Write m3u files
             foreach (var g in processedGames)
             {
